@@ -26,11 +26,11 @@ runs:
     - name: "Deploy"
       shell: bash
       run: |
-        target_component="${{inputs.target_component}}"
-        echo '${{ toJSON(steps.filter.outputs) }}' | jq .${target_component}
-        # if ${{ github.event.pull_request.merged }} = 'true'; then
-        #   echo "firebase deploy --only hosting:${{inputs.target_component}} --token"
-        # else
-        #   echo "no deploy"
-        # fi
+        TARGET_COMPONENT="${{inputs.target_component}}"
+        FILTER=$(echo '${{ toJSON(steps.filter.outputs) }}' | jq .${TARGET_COMPONENT})
+        if [[ "${FILTER}" == "true" ]]; then
+          echo "firebase deploy --only ${{ inputs.target_component }}"
+        else
+          echo "No changes in ${{ inputs.target_component }}. Skip deploy."
+        fi
         
