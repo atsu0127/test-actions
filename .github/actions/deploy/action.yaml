@@ -27,7 +27,7 @@ runs:
       shell: bash
       run: |
         TARGET_COMPONENT="${{inputs.target_component}}"
-        FILTER=$(echo '${{ toJSON(steps.filter.outputs) }}' | jq .${TARGET_COMPONENT})
+        FILTER=$(echo '${{ toJSON(steps.filter.outputs) }}' | jq -r .${TARGET_COMPONENT})
         if [[ "${FILTER}" == "true" ]]; then
           echo "firebase deploy --only ${{ inputs.target_component }}"
         else
