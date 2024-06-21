@@ -24,5 +24,6 @@ runs:
             - 'functions.txt'
 
     - name: "Deploy"
+      shell: bash
       if: steps.filter.outputs.${{inputs.target_component}} == 'true'
       run: echo "firebase deploy --only hosting:{{inputs.target_component}} --token"
