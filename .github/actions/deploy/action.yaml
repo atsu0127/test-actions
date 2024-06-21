@@ -26,10 +26,19 @@ runs:
     - name: "Deploy"
       shell: bash
       run: |
+        ## 対象のcomponentに変更があったか確認
         TARGET_COMPONENT="${{inputs.target_component}}"
         FILTER=$(echo '${{ toJSON(steps.filter.outputs) }}' | jq -r .${TARGET_COMPONENT})
+
         if [[ "${FILTER}" == "true" ]]; then
-          echo "firebase deploy --only ${{ inputs.target_component }}"
+          ## main or linkがデプロイ対象だったら頭にhostingをつける
+          DEPLOY_COMPONENT="${TARGET_COMPONENT}"
+          if [[ "${TARGET_COMPONENT}" == "main" || "${TARGET_COMPONENT}" == "link" ]]; then
+            DEPLOY_COMPONENT="hosting:${TARGET_COMPONENT}"
+          fi
+
+          echo "${{ inputs.target_component }} に変更があったためデプロイします。"
+          echo "firebase deploy --only $DEPLOY_COMPONENT"
         else
           echo "No changes in ${{ inputs.target_component }}. Skip deploy."
         fi
