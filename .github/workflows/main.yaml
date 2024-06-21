@@ -1,1 +1,15 @@
+name: "Main Step"
+on:
+  pull_request:
+    branches:
+      - master
+    types: [opened, synchronize, closed]
 
+jobs:
+  composite_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/deploy
+        with:
+          message: 'from main'
