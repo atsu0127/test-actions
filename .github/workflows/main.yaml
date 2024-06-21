@@ -12,18 +12,18 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/deploy
         with:
-          target_components: 'main'
+          target_component: 'main'
   link_deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/deploy
         with:
-          target_components: 'link'
+          target_component: 'link'
   functions_deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/deploy
         with:
-          target_components: 'functions'
+          target_component: 'functions'
