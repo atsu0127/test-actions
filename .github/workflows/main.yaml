@@ -2,7 +2,7 @@ name: "Main Step"
 on:
   pull_request:
     branches:
-      - master
+      - main
     types: [opened, synchronize, closed]
 
 jobs:
