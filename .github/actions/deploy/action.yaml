@@ -1,17 +1,28 @@
----
-name: "Composite Action"
-description: "[Test] Composite Action"
+name: "Deploy Firebase Component"
+description: "inputsで指定されたFirebaseのコンポーネントをデプロイします。PRに指定されたディレクトリの変更点がない場合は実行されません。"
 inputs:
-  message:
-    default: 'hello'
-    required: false
+  target_component:
+    description: "デプロイ対象のコンポーネント(main or link or functions)"
+    required: true
 
 runs:
   using: "composite"
   steps:
-    - name: "Checkout"
-      uses: actions/checkout@v2
+    - name: "Git Checkout"
+        uses: actions/checkout@v4
 
-    - name: "Hello World"
-      shell: bash
-      run: echo 'Hello World ${{inputs.message}}'
+    - name: "Paths Filter"
+      uses: dorny/paths-filter@v3
+      id: filter
+      with:
+        filters: |
+          main:
+            - 'main.txt'
+          link:
+            - 'link.txt'
+          functions:
+            - 'functions.txt'
+
+    - name: "Deploy"
+      if: steps.filter.outputs.${{inputs.target_component}} == 'true'
+      run: echo "firebase deploy --only hosting:{{inputs.target_component}} --token"
