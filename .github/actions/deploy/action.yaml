@@ -27,7 +27,7 @@ runs:
       shell: bash
       run: |
         target_component="${{inputs.target_component}}"
-        echo ${{ steps.filter.outputs }} | jq .
+        echo '${{ toJSON(steps.filter.outputs) }}' | jq .
         # if ${{ github.event.pull_request.merged }} = 'true'; then
         #   echo "firebase deploy --only hosting:${{inputs.target_component}} --token"
         # else
