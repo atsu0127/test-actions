@@ -25,7 +25,6 @@ runs:
 
     - name: "Deploy"
       shell: bash
-      if:  == 'true'
       run: |
         local target_component="${{inputs.target_component}}"
         local outputs="${{steps.filter.outputs}}"
