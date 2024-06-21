@@ -1,5 +1,5 @@
 ---
-name: "Composite Action ${{input.message}}"
+name: "Composite Action"
 description: "[Test] Composite Action"
 inputs:
   message:
@@ -14,4 +14,4 @@ runs:
 
     - name: "Hello World"
       shell: bash
-      run: echo 'Hello World ${{input.message}}'
+      run: echo 'Hello World ${{inputs.message}}'
