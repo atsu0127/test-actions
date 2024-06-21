@@ -1,5 +1,5 @@
 ---
-name: "Composite Action ${{inputs.message}}"
+name: "Composite Action"
 description: "[Test] Composite Action"
 inputs:
   message:
