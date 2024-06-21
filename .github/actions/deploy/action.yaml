@@ -25,5 +25,15 @@ runs:
 
     - name: "Deploy"
       shell: bash
-      if: steps.filter.outputs.${{inputs.target_component}} == 'true'
-      run: echo "firebase deploy --only hosting:${{inputs.target_component}} --token"
+      if:  == 'true'
+      run: |
+        local target_component="${{inputs.target_component}}"
+        local outputs="${{steps.filter.outputs}}"
+        echo "${outputs}"
+        echo "${outputs}" | jq .
+        # if ${{ github.event.pull_request.merged }} = 'true'; then
+        #   echo "firebase deploy --only hosting:${{inputs.target_component}} --token"
+        # else
+        #   echo "no deploy"
+        # fi
+        
