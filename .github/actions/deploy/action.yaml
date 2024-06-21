@@ -27,7 +27,7 @@ runs:
       shell: bash
       run: |
         target_component="${{inputs.target_component}}"
-        outputs="${{steps.filter.outputs}}"
+        outputs="${{toJSON(steps.filter.outputs)}}"
         echo "${outputs}"
         echo "${outputs}" | jq .
         # if ${{ github.event.pull_request.merged }} = 'true'; then
