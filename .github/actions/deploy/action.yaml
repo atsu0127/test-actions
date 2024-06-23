@@ -23,7 +23,8 @@ runs:
           functions:
             - 'functions.txt'
 
-    - uses: asdf-vm/actions/install@v3
+    - name: "install packages"
+      uses: asdf-vm/actions/install@v3
 
     - name: "Deploy"
       shell: bash
