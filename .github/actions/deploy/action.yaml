@@ -23,9 +23,14 @@ runs:
           functions:
             - 'functions.txt'
 
+    - uses: asdf-vm/actions/install@v3
+
     - name: "Deploy"
       shell: bash
       run: |
+        node -v
+        firebase --version
+        gcloud --version
         ## 対象のcomponentに変更があったか確認
         TARGET_COMPONENT="${{inputs.target_component}}"
         FILTER=$(echo '${{ toJSON(steps.filter.outputs) }}' | jq -r .${TARGET_COMPONENT})
