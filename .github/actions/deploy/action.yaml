@@ -47,7 +47,7 @@ runs:
         ## 対象のcomponentに変更があったか確認
         TARGET_COMPONENT="${{inputs.target_component}}"
         FILTER=$(echo '${{ toJSON(steps.filter.outputs) }}' | jq -r .${TARGET_COMPONENT})
-        FORCE_RUN=$(echo '${{ toJSON(inputs) }}' | jq -r ."force_run_${TARGET_COMPONENT}")
+        FORCE_RUN=$(echo '${{ toJSON(inputs) }}' | jq -r ."force_deploy_${TARGET_COMPONENT}")
         echo '${{ toJSON(steps.filter.outputs) }}' | jq .
         echo '${{ toJSON(inputs) }}' | jq .
 
