@@ -4,15 +4,15 @@ inputs:
   target_component:
     description: "デプロイ対象のコンポーネント(main or link or functions)"
     required: true
-  functions:
+  force_run_functions:
     type: boolean
     required: false
     default: false
-  main:
+  force_run_main:
     type: boolean
     required: false
     default: false
-  link:
+  force_run_link:
     type: boolean
     required: false
     default: false
@@ -35,8 +35,8 @@ runs:
           functions:
             - 'functions.txt'
 
-    - name: "install packages"
-      uses: asdf-vm/actions/install@v3
+    # - name: "install packages"
+    #   uses: asdf-vm/actions/install@v3
 
     - name: "Deploy"
       shell: bash
@@ -47,9 +47,10 @@ runs:
         ## 対象のcomponentに変更があったか確認
         TARGET_COMPONENT="${{inputs.target_component}}"
         FILTER=$(echo '${{ toJSON(steps.filter.outputs) }}' | jq -r .${TARGET_COMPONENT})
-        echo '${{ toJSON(inputs) }}' | jq .
+        FORCE_RUN=$(echo '${{ toJSON(inputs) }}' | jq -r ."force_run_${TARGET_COMPONENT}")
+        echo '${{ toJSON(steps.filter.outputs) }}' | jq .
 
-        if [[ "${FILTER}" == "true" ]]; then
+        if [[ "${FILTER}" == "true" || "${FORCE_RUN}" == "true" ]]; then
           ## main or linkがデプロイ対象だったら頭にhostingをつける
           DEPLOY_COMPONENT="${TARGET_COMPONENT}"
           if [[ "${TARGET_COMPONENT}" == "main" || "${TARGET_COMPONENT}" == "link" ]]; then
