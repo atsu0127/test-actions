@@ -10,11 +10,11 @@ on:
         type: boolean
         required: true
         default: false
-      hosting-main:
+      main:
         type: boolean
         required: true
         default: false
-      hosting-link:
+      link:
         type: boolean
         required: true
         default: false
