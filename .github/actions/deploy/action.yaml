@@ -4,6 +4,18 @@ inputs:
   target_component:
     description: "デプロイ対象のコンポーネント(main or link or functions)"
     required: true
+  functions:
+    type: boolean
+    required: false
+    default: false
+  main:
+    type: boolean
+    required: false
+    default: false
+  link:
+    type: boolean
+    required: false
+    default: false
 
 runs:
   using: "composite"
@@ -35,6 +47,7 @@ runs:
         ## 対象のcomponentに変更があったか確認
         TARGET_COMPONENT="${{inputs.target_component}}"
         FILTER=$(echo '${{ toJSON(steps.filter.outputs) }}' | jq -r .${TARGET_COMPONENT})
+        echo '${{ toJSON(inputs) }}' | jq .
 
         if [[ "${FILTER}" == "true" ]]; then
           ## main or linkがデプロイ対象だったら頭にhostingをつける
