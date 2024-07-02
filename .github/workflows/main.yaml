@@ -6,15 +6,15 @@ on:
     types: [opened, synchronize, closed]
   workflow_dispatch:
     inputs:
-      functions:
+      force_deploy_functions:
         type: boolean
         required: true
         default: false
-      main:
+      force_deploy_main:
         type: boolean
         required: true
         default: false
-      link:
+      force_deploy_link:
         type: boolean
         required: true
         default: false
@@ -28,6 +28,7 @@ jobs:
       - uses: ./.github/actions/deploy
         with:
           target_component: 'main'
+          force_deploy_main: ${force_deploy_main}
   link_deploy:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
@@ -36,6 +37,7 @@ jobs:
       - uses: ./.github/actions/deploy
         with:
           target_component: 'link'
+          force_deploy_link: ${force_deploy_link}
   functions_deploy:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
@@ -44,3 +46,4 @@ jobs:
       - uses: ./.github/actions/deploy
         with:
           target_component: 'functions'
+          force_run_functions: ${force_run_functions}
