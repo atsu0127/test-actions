@@ -5,6 +5,19 @@ on:
       - main
     types: [opened, synchronize, closed]
   workflow_dispatch:
+    inputs:
+      functions:
+        type: boolean
+        required: true
+        default: false
+      hosting-main:
+        type: boolean
+        required: true
+        default: false
+      hosting-link:
+        type: boolean
+        required: true
+        default: false
 
 jobs:
   main_deploy:
