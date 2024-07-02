@@ -4,15 +4,15 @@ inputs:
   target_component:
     description: "デプロイ対象のコンポーネント(main or link or functions)"
     required: true
-  force_run_functions:
+  force_deploy_functions:
     type: boolean
     required: false
     default: false
-  force_run_main:
+  force_deploy_main:
     type: boolean
     required: false
     default: false
-  force_run_link:
+  force_deploy_link:
     type: boolean
     required: false
     default: false
@@ -41,14 +41,15 @@ runs:
     - name: "Deploy"
       shell: bash
       run: |
-        node -v
-        firebase --version
-        gcloud --version
+        # node -v
+        # firebase --version
+        # gcloud --version
         ## 対象のcomponentに変更があったか確認
         TARGET_COMPONENT="${{inputs.target_component}}"
         FILTER=$(echo '${{ toJSON(steps.filter.outputs) }}' | jq -r .${TARGET_COMPONENT})
         FORCE_RUN=$(echo '${{ toJSON(inputs) }}' | jq -r ."force_run_${TARGET_COMPONENT}")
         echo '${{ toJSON(steps.filter.outputs) }}' | jq .
+        echo '${{ toJSON(inputs) }}' | jq .
 
         if [[ "${FILTER}" == "true" || "${FORCE_RUN}" == "true" ]]; then
           ## main or linkがデプロイ対象だったら頭にhostingをつける
