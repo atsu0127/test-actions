@@ -28,7 +28,7 @@ jobs:
       - uses: ./.github/actions/deploy
         with:
           target_component: 'main'
-          force_deploy_main: ${{force_deploy_main}}
+          force_deploy_main: '${{force_deploy_main}}'
   link_deploy:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
@@ -37,7 +37,7 @@ jobs:
       - uses: ./.github/actions/deploy
         with:
           target_component: 'link'
-          force_deploy_link: ${{force_deploy_link}}
+          force_deploy_link: '${{force_deploy_link}}'
   functions_deploy:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
@@ -46,4 +46,4 @@ jobs:
       - uses: ./.github/actions/deploy
         with:
           target_component: 'functions'
-          force_run_functions: ${{force_run_functions}}
+          force_run_functions: '${{force_run_functions}}'
