@@ -46,4 +46,4 @@ jobs:
       - uses: ./.github/actions/deploy
         with:
           target_component: 'functions'
-          force_run_functions: '${{force_run_functions}}'
+          force_deploy_functions: '${{force_deploy_functions}}'
